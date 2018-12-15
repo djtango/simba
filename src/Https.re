@@ -1,6 +1,6 @@
 type url;
 type https;
-type response;
+type response = string;
 type jsonData;
 type responseCallback = (response) => unit;
 [@bs.send] external get : (https, responseCallback) => unit = "";
@@ -52,8 +52,8 @@ let get: (urlOpts, responseCallback) => unit = [%bs.raw {|
       res.on('data', (chunk) => { rawData += chunk; });
       res.on('end', () => {
         try {
-          const parsedData = JSON.parse(rawData);
-          next(parsedData);
+          /* const parsedData = JSON.parse(rawData); */
+          next(rawData);
         } catch (e) {
           console.error(e.message);
         }
